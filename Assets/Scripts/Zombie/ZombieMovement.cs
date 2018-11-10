@@ -1,37 +1,39 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ZombieMovement : MonoBehaviour {
 
     public float speed;
 
-    private bool move = true;
-    private Transform target;
+    [SerializeField]
+    Transform _destination;
 
-	// Use this for initialization
-	void Start () {
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        ZombieFollow();
-    }
+    NavMeshAgent _navMeshAgent;
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void Start()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        _navMeshAgent = this.GetComponent<NavMeshAgent>();
+
+        if(_navMeshAgent == null)
         {
-            
+            Debug.LogError("The nav mesh agent component is not attached to " + gameObject.name);
         }
     }
 
-    private void ZombieFollow()
+    private void SetDestination()
     {
-        if (move)
+        if(_destination != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            Vector3 targetVector = _destination.transform.position;
+            _navMeshAgent.SetDestination(targetVector);
         }
+    }
+
+    private void Update()
+    {
+        SetDestination();
     }
 }
