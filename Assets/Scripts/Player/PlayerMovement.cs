@@ -6,32 +6,37 @@ public class PlayerMovement : MonoBehaviour {
 
     public float speed;
     public string direction;
+    public float moveVertical;
+    public Animator animator;
     private Rigidbody rb;
 
 	void Start () {
         rb = GetComponent<Rigidbody>();
     }
 	
-	// Update is called once per frame
 	void Update () {
-        float moveVertical = Input.GetAxis("Vertical");
+        moveVertical = Input.GetAxis("Vertical");
         float moveHorizontal = Input.GetAxis("Horizontal");
+
         Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
         rb.velocity = movement * speed;
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        animator.SetFloat("VerticalSpeed", moveVertical);
+        animator.SetFloat("HorizontalSpeed", moveHorizontal);
+
+        if (moveHorizontal > 0)
         {   
-            if (direction != "Up")
+            if (direction != "Right")
             {
-                Flip();
-                direction = "Up";
+                //Flip();
+                direction = "Right";
             }
-        } else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        } else if (moveHorizontal < 0)
         {
-            if (direction != "Down")
+            if (direction != "Left")
             {
-                Flip();
-                direction = "Down";
+                //Flip();
+                direction = "Left";
             }
         }
     }
