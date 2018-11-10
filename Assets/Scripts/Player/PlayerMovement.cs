@@ -6,17 +6,17 @@ public class PlayerMovement : MonoBehaviour {
 
     public float speed;
     public string direction;
-    private Rigidbody2D rb;
+    private Rigidbody rb;
 
 	void Start () {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
     }
 	
 	// Update is called once per frame
 	void Update () {
         float moveVertical = Input.GetAxis("Vertical");
         float moveHorizontal = Input.GetAxis("Horizontal");
-        Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0);
+        Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
         rb.velocity = movement * speed;
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
