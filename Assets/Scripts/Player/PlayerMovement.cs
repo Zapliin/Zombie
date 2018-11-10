@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour {
 
     public float speed;
     public string direction;
-    public float moveVertical;
     public Animator animator;
     private Rigidbody rb;
 
@@ -15,12 +14,13 @@ public class PlayerMovement : MonoBehaviour {
     }
 	
 	void Update () {
-        moveVertical = Input.GetAxisRaw("Vertical");
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = Input.GetAxis("Horizontal");
 
         Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
         rb.velocity = movement * speed;
 
+        //Animaciones
         animator.SetFloat("VerticalSpeed", moveVertical);
         animator.SetFloat("HorizontalSpeed", moveHorizontal);
 
