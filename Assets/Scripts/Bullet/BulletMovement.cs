@@ -17,13 +17,16 @@ public class BulletMovement : MonoBehaviour {
 	}
 
     private void OnTriggerEnter(Collider hitInfo)
-    {
-        ZombieProperties zombie = hitInfo.GetComponent<ZombieProperties>();
-        if (zombie != null)
+    {   
+        if (!hitInfo.gameObject.CompareTag("Bullet"))
         {
-            zombie.TakeDamage(damage);
+            ZombieProperties zombie = hitInfo.GetComponent<ZombieProperties>();
+            if (zombie != null)
+            {
+                zombie.TakeDamage(damage);
+            }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 
 }

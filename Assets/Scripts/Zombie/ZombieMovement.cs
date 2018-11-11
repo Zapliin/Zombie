@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class ZombieMovement : MonoBehaviour {
 
     public float speed;
+    private GameObject player;
 
     [SerializeField]
     Transform _destination;
@@ -25,7 +26,9 @@ public class ZombieMovement : MonoBehaviour {
 
     private void SetDestination()
     {
-        if(_destination != null)
+        player = GameObject.Find("Player");
+        _destination = player.transform;
+        if (_destination != null)
         {
             Vector3 targetVector = _destination.transform.position;
             _navMeshAgent.SetDestination(targetVector);

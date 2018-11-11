@@ -10,18 +10,6 @@ public class PlayerProperties : MonoBehaviour
 
     private float tick;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Zombie"))
@@ -36,7 +24,7 @@ public class PlayerProperties : MonoBehaviour
         {
             if (Time.time >= tick)
             {
-                tick = Time.time + 1;
+                tick = Time.time + hitTime;
                 life--;
                 Debug.Log("Hit!");
             }
