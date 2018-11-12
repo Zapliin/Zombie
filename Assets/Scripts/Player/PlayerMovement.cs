@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     public float speed;
-    public Animator animator;
 
+    private Animator animator;
     private Rigidbody rb;
 
 	void Start () {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 	
 	void Update () {

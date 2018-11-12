@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class ZombieMovement : MonoBehaviour {
 
     public float speed;
+    private Animator animator;
     private GameObject player;
 
     [SerializeField]
@@ -16,18 +17,20 @@ public class ZombieMovement : MonoBehaviour {
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         _navMeshAgent = this.GetComponent<NavMeshAgent>();
 
         if(_navMeshAgent == null)
         {
             Debug.LogError("The nav mesh agent component is not attached to " + gameObject.name);
         }
+        _navMeshAgent.updateRotation = false;
     }
 
     private void SetDestination()
     {
         player = GameObject.Find("Player");
-        _destination = player.transform;
+        _destination  = player.transform;
         if (_destination != null)
         {
             Vector3 targetVector = _destination.transform.position;
@@ -38,5 +41,9 @@ public class ZombieMovement : MonoBehaviour {
     private void Update()
     {
         SetDestination();
+
+        ////Animaciones
+        //animator.SetFloat("VerticalSpeed", moveVertical);
+        //animator.SetFloat("HorizontalSpeed", moveHorizontal);
     }
 }
