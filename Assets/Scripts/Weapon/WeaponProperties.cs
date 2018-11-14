@@ -8,9 +8,9 @@ public class WeaponProperties : MonoBehaviour {
     public GameObject bulletPrefab;
 
     public string weaponEqquiped = "Pistol";
-    private int damage;
-    private float fireRate;
-    private float speed;
+    public int damage;
+    public float fireRate;
+    public float speed;
 
     private bool startShooting = false;
     private float tick;

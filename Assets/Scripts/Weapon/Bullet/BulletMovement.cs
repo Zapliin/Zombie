@@ -4,23 +4,31 @@ using UnityEngine;
 
 public class BulletMovement : MonoBehaviour {
 
-    public float speed = 20f;
+    
     public Rigidbody rb;
-    public int damage;
     public float bulletDuration;
     public int pointHit = 5;
-    public float tick;
+
+    private float tick;
+    private float speed;
+    private int damage;
 
     private Vector3 velocity;
 
 	void Start () {
+        GameObject weapon = GameObject.Find("Weapon");
+        WeaponProperties weaponProperties = weapon.GetComponent<WeaponProperties>();
+
+        damage = weaponProperties.damage;
+        speed = weaponProperties.speed;
+
         float AimVertical = Input.GetAxisRaw("AimVertical");
         float AimHorizontal = Input.GetAxisRaw("AimHorizontal");
 
         velocity = new Vector3(AimHorizontal, 0, AimVertical);
         rb.velocity = velocity * speed;
         tick = Time.time + bulletDuration;
-	}
+    }
 
     private void OnTriggerEnter(Collider hitInfo)
     {   
