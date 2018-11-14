@@ -26,9 +26,11 @@ public class BulletMovement : MonoBehaviour {
         if (!hitInfo.gameObject.CompareTag("Bullet"))
         {
             ZombieProperties zombie = hitInfo.GetComponent<ZombieProperties>();
+            Score score = GameObject.Find("Puntuacion").GetComponent<Score>();
             if (zombie != null)
             {
                 zombie.TakeDamage(damage);
+                score.HitScore(damage);
             }
             Destroy(gameObject);
         }

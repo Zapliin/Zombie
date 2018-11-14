@@ -5,11 +5,20 @@ using UnityEngine;
 public class ZombieProperties : MonoBehaviour {
 
     public int health = 100;
+    public bool dead;
+    private Animator animator;
+    private Score score;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+        score = GameObject.Find("Puntuacion").GetComponent<Score>();
+    }
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
 
+        health -= damage;
         if (health <= 0)
         {
             Die();
@@ -18,6 +27,9 @@ public class ZombieProperties : MonoBehaviour {
 
     void Die()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        score.DieScore();
+        dead = true;
+        animator.SetBool("Dead", dead);
     }
 }

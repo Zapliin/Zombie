@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class ZombieMovement : MonoBehaviour {
 
     public float speed;
+    private ZombieProperties properties;
     private Animator animator;
     private GameObject player;
 
@@ -18,6 +19,7 @@ public class ZombieMovement : MonoBehaviour {
     private void Start()
     {
         animator = GetComponent<Animator>();
+        properties = GetComponent<ZombieProperties>();
         _navMeshAgent = this.GetComponent<NavMeshAgent>();
 
         if(_navMeshAgent == null)
@@ -29,12 +31,15 @@ public class ZombieMovement : MonoBehaviour {
 
     private void SetDestination()
     {
-        player = GameObject.Find("Player");
-        _destination  = player.transform;
-        if (_destination != null)
+        if (properties.dead == false)
         {
-            Vector3 targetVector = _destination.transform.position;
-            _navMeshAgent.SetDestination(targetVector);
+            player = GameObject.Find("Player");
+            _destination  = player.transform;
+            if (_destination != null)
+            {
+                Vector3 targetVector = _destination.transform.position;
+                _navMeshAgent.SetDestination(targetVector);
+            }
         }
     }
 
