@@ -6,10 +6,11 @@ public class BulletMovement : MonoBehaviour {
 
     public float speed = 20f;
     public Rigidbody rb;
-    public int damage = 20;
+    public int damage;
     public float bulletDuration;
-
+    public int pointHit = 5;
     public float tick;
+
     private Vector3 velocity;
 
 	void Start () {
@@ -30,7 +31,7 @@ public class BulletMovement : MonoBehaviour {
             if (zombie != null)
             {
                 zombie.TakeDamage(damage);
-                score.HitScore(damage);
+                score.HitScore(pointHit);
             }
             Destroy(gameObject);
         }

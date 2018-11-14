@@ -6,10 +6,14 @@ public class WeaponProperties : MonoBehaviour {
 
     public Transform playerTransform;
     public GameObject bulletPrefab;
-    public float fireRate = 1f;
+
+    public string weaponEqquiped = "Pistol";
+    private int damage;
+    private float fireRate;
+    private float speed;
 
     private bool startShooting = false;
-    public float tick;
+    private float tick;
     private Transform firePoint;
     private Vector3 initialPos;
     private float firePosX;
@@ -61,6 +65,17 @@ public class WeaponProperties : MonoBehaviour {
             tick = 0;
             startShooting = false;
         }
+
+        Pick();
+    }
+
+    void Pick()
+    {
+        GameObject weapon = GameObject.Find(weaponEqquiped);
+        Weapon weaponProperties = weapon.GetComponent<Weapon>();
+        damage = weaponProperties.damage;
+        fireRate = weaponProperties.fireRate;
+        speed = weaponProperties.speed;
     }
 
     public void Shoot()
