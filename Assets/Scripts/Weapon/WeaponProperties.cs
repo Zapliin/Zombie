@@ -9,7 +9,7 @@ public class WeaponProperties : MonoBehaviour {
 
     public string weaponEqquiped = "Pistol";
     public int damage;
-    public float fireRate;
+    private float fireRate;
     public float speed;
 
     private bool startShooting = false;
