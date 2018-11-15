@@ -20,7 +20,7 @@ public class CameraMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        position = new Vector3(playerTransform.position.x, t.position.y, playerTransform.position.z + startPosition);
+        position = new Vector3(playerTransform.position.x, playerTransform.position.y - startPosition , playerTransform.position.z + startPosition);
         t.position = position;
 	}
 }
