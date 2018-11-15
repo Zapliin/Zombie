@@ -69,11 +69,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13c3b29b72c9b346a9203fae509b3f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
   rb: {fileID: 54675404655848274}
-  damage: 20
   bulletDuration: 2
-  tick: 0
+  pointHit: 5
 --- !u!136 &136329216699719326
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -122,12 +120,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: f4c5dac695e86a14caeb09503dda0a06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
