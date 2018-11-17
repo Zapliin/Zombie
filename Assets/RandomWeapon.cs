@@ -7,12 +7,16 @@ public class RandomWeapon : MonoBehaviour {
 
     private Text enterText;
     private int rolling = 0;
-    public float tick;
+    private float tick;
+    private Weapon[] weapons;
+    private WeaponProperties weaponProperties;
+    private int actualWeapon = 0;
 
     // Use this for initialization
     void Start () {
         GameObject weapon = GameObject.Find("Weapon");
-        Weapon[] weapons = weapon.transform.gameObject.GetComponentsInChildren<Weapon>();
+        weaponProperties = weapon.GetComponent<WeaponProperties>();
+        weapons = weapon.transform.gameObject.GetComponentsInChildren<Weapon>();
         enterText = GameObject.Find("RandomBoxText").GetComponent<Text>();
     }
 	
@@ -49,6 +53,14 @@ public class RandomWeapon : MonoBehaviour {
             enterText.text = "Presiona F para recoger el arma";
             if (Input.GetKeyDown(KeyCode.F))
             {
+                int random = Random.Range(0, weapons.Length);
+                while (random == actualWeapon)
+                {
+                    random = Random.Range(0, weapons.Length);
+                    Debug.Log(weapons[random].getName());
+                }
+                actualWeapon = random;
+                weaponProperties.Pick(weapons[random].getName());                
                 rolling = 0;
                 tick = Time.time + 3;
                 enterText.text = "";
