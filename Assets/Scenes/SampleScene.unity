@@ -1910,7 +1910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 30
   fireRate: 0.001
-  speed: 10
+  speed: 50
   bullets: 900
   magazines: 10
   reloadTime: 5

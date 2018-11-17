@@ -8,7 +8,7 @@ public class ZombieMovement : MonoBehaviour {
 
     public float speed;
     private ZombieProperties properties;
-    private Animator animator;
+    //private Animator animator;
     private GameObject player;
 
     [SerializeField]
@@ -18,7 +18,7 @@ public class ZombieMovement : MonoBehaviour {
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         properties = GetComponent<ZombieProperties>();
         _navMeshAgent = this.GetComponent<NavMeshAgent>();
 

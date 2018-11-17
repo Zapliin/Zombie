@@ -10,14 +10,14 @@ public class ZombieProperties : MonoBehaviour {
     private GameObject roundCounter;
     private RoundCounter roundCounterScript;
     private Animator animator;
-    private CapsuleCollider collider;
+    private CapsuleCollider capsuleCollider;
     private NavMeshAgent navMeshAgent;
     private Score score;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        collider = GetComponent<CapsuleCollider>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         score = GameObject.Find("Puntuacion").GetComponent<Score>();
         roundCounter = GameObject.Find("RoundCounter");
@@ -41,10 +41,12 @@ public class ZombieProperties : MonoBehaviour {
         score.DieScore();
         dead = true;
         animator.SetBool("Dead", dead);
-        
+        Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezePosition;
+
         roundCounterScript.KillCount();
         navMeshAgent.enabled = false;
-        collider.enabled = false;
+        capsuleCollider.enabled = false;
         //Destroy(gameObject);
     }
 }

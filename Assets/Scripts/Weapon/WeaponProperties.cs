@@ -18,7 +18,9 @@ public class WeaponProperties : MonoBehaviour {
     private int bulletsLoaded;
     private int bulletsInMagazine;
     private float reloadTime;
+    private float reloadTick;
 
+    private bool reloading;
     private bool startShooting = false;
     private float tick;
     private Transform firePoint;
@@ -39,34 +41,51 @@ public class WeaponProperties : MonoBehaviour {
 
         firePoint.position = new Vector3(firePosX, firePoint.position.y, firePosZ);
 
-        if ((AimHorizontal != 0 || AimVertical != 0) && !startShooting)
+        if ((AimHorizontal != 0 || AimVertical != 0) && !startShooting && !reloading)
         {
             Shoot();
             tick = Time.time + fireRate;
             startShooting = true;
         }
 
-        if (AimHorizontal != 0)
+        /* -------------------------Direccion del arma------------------------- */
+
+        //Solo horizontal
+        if (AimHorizontal != 0 && AimVertical == 0)
         {       
             firePosX = playerTransform.position.x + initialPos.x * AimHorizontal;
             firePosZ = playerTransform.position.z + initialPos.z * AimHorizontal;
-            if(Time.time >= tick)
+            if(Time.time >= tick && !reloading)
             {
                 Shoot();
                 tick = Time.time + fireRate;
             } 
         }
 
-        if (AimVertical != 0)
+        //Solo vertical
+        if (AimVertical != 0 && AimHorizontal == 0)
         {
             firePosX = playerTransform.position.x + initialPos.z * AimVertical;
             firePosZ = playerTransform.position.z + initialPos.x * AimVertical;
-            if (Time.time >= tick)
+            if (Time.time >= tick && !reloading)
             {
                 Shoot();
                 tick = Time.time + fireRate;
             }
         }
+
+        //Diagonales
+        if (AimHorizontal != 0 && AimVertical != 0)
+        {
+            firePosX = playerTransform.position.x + initialPos.x * AimHorizontal;
+            firePosZ = playerTransform.position.z + initialPos.x * AimVertical;
+            if (Time.time >= tick && !reloading)
+            {
+                Shoot();
+                tick = Time.time + fireRate;
+            }
+        }
+        /* ----------------------------------------------------------------------*/
 
         if (AimHorizontal == 0 && AimVertical == 0)
         {
@@ -74,15 +93,23 @@ public class WeaponProperties : MonoBehaviour {
             startShooting = false;
         }
 
-        if (Input.GetKeyDown("r"))
+        if (Input.GetKeyDown("r") && bulletsLoaded != bullets)
+        {
+            reloadTick = Time.time + reloadTime;
+            reloading = true;
+            
+        }
+
+        if (Time.time >= reloadTick && reloading)
         {
             Reload();
+            reloading = false;
         }
-        
+
         ammoText.text = bulletsLoaded.ToString() + " / " + bulletsInMagazine.ToString();
     }
 
-    public void Pick(string weaponEqquiped = "FMG9000")
+    public void Pick(string weaponEqquiped = "Pistol")
     {
         GameObject weapon = GameObject.Find(weaponEqquiped);
         Weapon weaponProperties = weapon.GetComponent<Weapon>();
