@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponProperties : MonoBehaviour {
 
     public Transform playerTransform;
     public GameObject bulletPrefab;
+    public Text ammoText;
 
-    //public string weaponEqquiped = "Pistol";
+    //Weapon Properties
     public int damage;
-    private float fireRate;
     public float speed;
+    private float fireRate;
+    private int bullets;
+    private int magazines;
+    private int bulletsLoaded;
+    private int bulletsInMagazine;
+    private float reloadTime;
 
     private bool startShooting = false;
     private float tick;
@@ -66,6 +73,13 @@ public class WeaponProperties : MonoBehaviour {
             tick = 0;
             startShooting = false;
         }
+
+        if (Input.GetKeyDown("r"))
+        {
+            Reload();
+        }
+        
+        ammoText.text = bulletsLoaded.ToString() + " / " + bulletsInMagazine.ToString();
     }
 
     public void Pick(string weaponEqquiped = "Pistol")
@@ -75,10 +89,41 @@ public class WeaponProperties : MonoBehaviour {
         damage = weaponProperties.damage;
         fireRate = weaponProperties.fireRate;
         speed = weaponProperties.speed;
+        bullets = weaponProperties.bullets;
+        magazines = weaponProperties.magazines;
+        reloadTime = weaponProperties.reloadTime;
+        bulletsLoaded = bullets;
+        bulletsInMagazine = bullets * (magazines - 1);
+        ammoText.color = new Color(255, 255, 255, 255);
     }
 
     public void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        if (bulletsLoaded > 0)
+        {
+            bulletsLoaded--;
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        }
+        else
+        {
+            Reload();
+        }
     }
+
+    void Reload()
+    {
+        if (bulletsInMagazine > 0)
+        {
+            int difference;
+            difference = bullets - bulletsLoaded;
+            bulletsLoaded += difference;
+            bulletsInMagazine -= difference;
+        }
+        else if (bulletsInMagazine == 0 && bulletsLoaded == 0)
+        {
+            ammoText.color = new Color(255, 0, 0, 255);
+            Debug.Log("Out of ammo");
+        }
+    }
+
 }
