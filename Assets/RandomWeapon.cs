@@ -57,7 +57,6 @@ public class RandomWeapon : MonoBehaviour {
                 while (random == actualWeapon)
                 {
                     random = Random.Range(0, weapons.Length);
-                    Debug.Log(weapons[random].getName());
                 }
                 actualWeapon = random;
                 weaponProperties.Pick(weapons[random].getName());                
