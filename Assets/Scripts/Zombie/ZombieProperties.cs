@@ -7,6 +7,8 @@ public class ZombieProperties : MonoBehaviour {
 
     public int health = 100;
     public bool dead;
+    private GameObject roundCounter;
+    private RoundCounter roundCounterScript;
     private Animator animator;
     private CapsuleCollider collider;
     private NavMeshAgent navMeshAgent;
@@ -18,6 +20,9 @@ public class ZombieProperties : MonoBehaviour {
         collider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         score = GameObject.Find("Puntuacion").GetComponent<Score>();
+        roundCounter = GameObject.Find("RoundCounter");
+        roundCounterScript = roundCounter.GetComponent<RoundCounter>();
+
     }
 
     public void TakeDamage(int damage)
@@ -32,9 +37,12 @@ public class ZombieProperties : MonoBehaviour {
 
     void Die()
     {
+        roundCounterScript = roundCounter.GetComponent<RoundCounter>();
         score.DieScore();
         dead = true;
         animator.SetBool("Dead", dead);
+        
+        roundCounterScript.KillCount();
         navMeshAgent.enabled = false;
         collider.enabled = false;
         //Destroy(gameObject);

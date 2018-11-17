@@ -82,7 +82,7 @@ public class WeaponProperties : MonoBehaviour {
         ammoText.text = bulletsLoaded.ToString() + " / " + bulletsInMagazine.ToString();
     }
 
-    public void Pick(string weaponEqquiped = "Pistol")
+    public void Pick(string weaponEqquiped = "FMG9000")
     {
         GameObject weapon = GameObject.Find(weaponEqquiped);
         Weapon weaponProperties = weapon.GetComponent<Weapon>();
