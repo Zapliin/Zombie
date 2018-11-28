@@ -10,9 +10,11 @@ public class RoundCounter : MonoBehaviour {
     public int zombiesAmount;
     public int multiplier;
 
-    public int zombiePerSpawn;
-    public int roundNumber = 1;
-    public int killCount;
+    private int zombiePerSpawn;
+    private int roundNumber;
+    private int killCount;
+    public float endTime = 5;
+    private float startTime;
     private ZombieSpawn[] spawns;
 
 	// Use this for initialization
@@ -20,38 +22,47 @@ public class RoundCounter : MonoBehaviour {
         GameObject spawn = GameObject.Find("Spawns");
         spawns = spawn.transform.gameObject.GetComponentsInChildren<ZombieSpawn>();
         zombiePerSpawn = zombiesAmount / spawns.Length;
+        roundNumber = 1;
+        foreach (ZombieSpawn item in spawns)
+        {
+            item.zombiesAmount = zombiePerSpawn;
+        }
+        roundCounter.text = roundNumber.ToString();
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        if (Time.time >= startTime)
+        {
+            startTime = 0;
+            RoundStart();
+        }
+	}
 
+    private void RoundStart()
+    {
+        roundCounter.text = roundNumber.ToString();
         foreach (ZombieSpawn item in spawns)
         {
             item.zombiesAmount = zombiePerSpawn;
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-        //RoundFinish();
-	}
 
     private void RoundFinish()
     {
         zombiesAmount *= multiplier;
         zombiePerSpawn = zombiesAmount / spawns.Length;
-
-        foreach (ZombieSpawn item in spawns)
-        {
-            item.zombiesAmount = zombiePerSpawn;
-        }
+        roundNumber++;
+        killCount = 0;
+        startTime = Time.time + endTime;
     }
 
     public void KillCount()
     {
         killCount++;
         if (killCount == zombiesAmount)
-        {
-            killCount = 0;
-            RoundFinish();
-            roundNumber++;
-            roundCounter.text = roundNumber.ToString();
+        {            
+            RoundFinish();                       
         }
     }
 }
