@@ -7,26 +7,24 @@ using UnityEngine.AI;
 public class ZombieMovement : MonoBehaviour {
 
     public float speed;
+
     private ZombieProperties properties;
     //private Animator animator;
     private GameObject player;
-
-    [SerializeField]
-    Transform _destination;
-
-    NavMeshAgent _navMeshAgent;
+    private NavMeshAgent navMeshAgent;
 
     private void Start()
     {
         //animator = GetComponent<Animator>();
         properties = GetComponent<ZombieProperties>();
-        _navMeshAgent = this.GetComponent<NavMeshAgent>();
+        navMeshAgent = this.GetComponent<NavMeshAgent>();
 
-        if(_navMeshAgent == null)
+        if(navMeshAgent == null)
         {
             Debug.LogError("The nav mesh agent component is not attached to " + gameObject.name);
         }
-        _navMeshAgent.updateRotation = false;
+
+        navMeshAgent.updateRotation = false; //Evita que el zombie rote.
     }
 
     private void SetDestination()
@@ -34,11 +32,11 @@ public class ZombieMovement : MonoBehaviour {
         if (properties.dead == false)
         {
             player = GameObject.Find("Player");
-            _destination  = player.transform;
-            if (_destination != null)
+            Transform destination  = player.transform;
+            if (destination != null)
             {
-                Vector3 targetVector = _destination.transform.position;
-                _navMeshAgent.SetDestination(targetVector);
+                Vector3 targetVector = destination.transform.position;
+                navMeshAgent.SetDestination(targetVector);
             }
         }
     }
