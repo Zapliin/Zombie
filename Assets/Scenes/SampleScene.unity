@@ -1208,9 +1208,7 @@ MonoBehaviour:
   roundCounter: {fileID: 461943460}
   zombiesAmount: 10
   multiplier: 2
-  zombiePerSpawn: 0
-  roundNumber: 0
-  killCount: 0
+  endTime: 5
 --- !u!4 &672498834
 Transform:
   m_ObjectHideFlags: 0
