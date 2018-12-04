@@ -23,16 +23,21 @@ public class WeaponProperties : MonoBehaviour {
     private bool reloading;
     private bool startShooting = false;
     private float tick;
+
     private Transform firePoint;
     private Vector3 initialPos;
     private float firePosX;
     private float firePosZ;
+    private float newPosX;
+    private float newPosY;
 
     void Start()
     {
         Pick();
         firePoint = GetComponent<Transform>();
         initialPos = firePoint.position;
+        newPosX = initialPos.x;
+        newPosY = initialPos.z;
     }
 
     void Update () {
@@ -41,20 +46,25 @@ public class WeaponProperties : MonoBehaviour {
 
         firePoint.position = new Vector3(firePosX, firePoint.position.y, firePosZ);
 
-        if ((AimHorizontal != 0 || AimVertical != 0) && !startShooting && !reloading)
+        if (AimHorizontal != 0 || AimVertical != 0)
         {
+            if (!startShooting && !reloading)
+            {
             Shoot();
             tick = Time.time + fireRate;
             startShooting = true;
+            }
         }
 
         /* -------------------------Direccion del arma------------------------- */
+        firePosX = playerTransform.position.x + newPosX;
+        firePosZ = playerTransform.position.z + newPosY;
 
         //Solo horizontal
         if (AimHorizontal != 0 && AimVertical == 0)
-        {       
-            firePosX = playerTransform.position.x + initialPos.x * AimHorizontal;
-            firePosZ = playerTransform.position.z + initialPos.z * AimHorizontal;
+        {
+            newPosX = initialPos.x * AimHorizontal;
+            newPosY = initialPos.z * AimHorizontal;
             if(Time.time >= tick && !reloading)
             {
                 Shoot();
@@ -65,8 +75,8 @@ public class WeaponProperties : MonoBehaviour {
         //Solo vertical
         if (AimVertical != 0 && AimHorizontal == 0)
         {
-            firePosX = playerTransform.position.x + initialPos.z * AimVertical;
-            firePosZ = playerTransform.position.z + initialPos.x * AimVertical;
+            newPosX = initialPos.z * AimVertical;
+            newPosY = initialPos.x * AimVertical;
             if (Time.time >= tick && !reloading)
             {
                 Shoot();
@@ -77,8 +87,8 @@ public class WeaponProperties : MonoBehaviour {
         //Diagonales
         if (AimHorizontal != 0 && AimVertical != 0)
         {
-            firePosX = playerTransform.position.x + initialPos.x * AimHorizontal;
-            firePosZ = playerTransform.position.z + initialPos.x * AimVertical;
+            newPosX = initialPos.x * AimHorizontal;
+            newPosY = initialPos.x * AimVertical;
             if (Time.time >= tick && !reloading)
             {
                 Shoot();
