@@ -20,8 +20,8 @@ public class HideWalls : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
-             primer.SetActive(true);
-            techo.SetActive(true);
+            primer.SetActive(true);
+            techo.SetActive(false);
         }
     }
 }
